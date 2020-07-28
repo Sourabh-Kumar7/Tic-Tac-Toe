@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include<conio.h>
 using namespace std;
 
 #define side 3
@@ -36,7 +37,8 @@ class TicTacToe
             
         }
         void Instruction()
-        {
+        {   
+            system("clear");
             cout<<"\n\n";
             cout<<"\t\t\t\t Tic-Tac_Toe \n\n";
             cout<<"\t\tChoose a cell no. from 1-9 as below and play\n\n";
@@ -51,6 +53,7 @@ class TicTacToe
             cout<<"\n";
             
             cout<<"--\t--\t--\t--\t--\t--\t--\t--\t--\t--\t--\n";
+
         }
         
         void initialise(char board[][side],int moves[])
@@ -114,13 +117,11 @@ class TicTacToe
         {
             if(turn == PLAYER1)
             {
-                //clrscr();
-                //showBoard(board);
-                cout<<"Player 1 has won\n\n";
+                cout<<"Congratualtions Player 1 !!!\n You have won the match\n\n";
             }
             else
             {
-                cout<<"Player 2 has won\n\n";
+                cout<<"Congratualtions Player 2 !!!\n You have won the match\n\n";
             }
             return;
         }
@@ -140,22 +141,18 @@ class TicTacToe
         {
             
             initialise(board,moves);
+            showBoard();
             
             while(gameOver(board)==false && moveIndex != side*side)
             {
                 if(turn == PLAYER1)
                 {
-                    /*
-                    x = moves[moveIndex]/side;
-                    y = moves[moveIndex]%side;
-                    */
-                    //system("clear");
                     place = getData(turn);
                     system("clear");
                     x=(place-1)/side;
                     y=(place-1)%side;
                     board[x][y] = PLAYER1MOVE;
-                    cout<<"Player 2 has put "<<PLAYER1MOVE<<" in a cell "<<place<<"\n";
+                    cout<<"Player 1 has put "<<PLAYER1MOVE<<" in a cell "<<place<<"\n";
                     showBoard();
                     moveIndex++;
                     turn = PLAYER2;
@@ -178,19 +175,19 @@ class TicTacToe
             
             if(gameOver(board)==false && moveIndex == side*side)
             {
-                //clrscr();
                 system("clear");
                 showBoard();
                 cout<<"It's a draw match \n\n";
             }
             else
             {
+                cout<<moveIndex<<endl;
                 if(turn==PLAYER1)turn=PLAYER2;
                 else if(turn == PLAYER2)turn = PLAYER1;
                 
                 winner(turn);
             }
-            
+
             return ;
         }
         
@@ -200,9 +197,53 @@ class TicTacToe
 int main()
 {
     TicTacToe t;
+
+    int choice;
+  
+    do 
+    {   
     
-    t.Instruction();
-    t.play(PLAYER1);
+    system("clear");
+    cout<<"\n\n";
+    cout<<"\t\t      //--------------\\\\ "<<"\n";
+    cout<<"\t\t     //----------------\\\\ "<<"\n";
+    cout<<"\t\t    //------------------\\\\ "<<"\n";
+    cout<<"\t\t   //--------------------\\\\ "<<"\n";
+    cout<<"\t\t  //----------------------\\\\ "<<"\n";
+    cout<<"\t\t //------------------------\\\\ "<<"\n";
+    cout<<"\t\t//--||-- TIC-TAC-TOE -- ||--\\\\ "<<"\n\n\n";
+        cout<<"\t\t  - - - - -  MENU - - - - -\n\n\n";
+        cout<<"\t\t  1.  INSTRUCTION\n\n";
+        cout<<"\t\t  2.  PLAY\n\n";
+        cout<<"\t\t  3.  EXIT\n\n";
+        cin>>choice;
+        switch(choice)
+        {
+            case 1:
+                {
+                    system("clear");
+                    t.Instruction();
+                    getch();
+                    getch();
+                }
+                break;
+            case 2:
+                system("clear");
+                t.play(PLAYER1);
+                getch();
+                getch();
+                break;
+            case 3:
+                system("clear");
+                cout<<"\t\tThank you for your lovely time.\n";
+                cout<<"--\t--\t--\t     BYE\t    --\t--\t--\t\n";
+                return 0;
+                break;
+            default:
+                cout<<" \t---\tInvalid Choice\t---\t\n";
+                break;
+        }
+    }while(choice!=3);
     
     return 0;
 }
