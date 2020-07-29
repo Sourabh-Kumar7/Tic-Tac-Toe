@@ -1,5 +1,5 @@
 # Tic-Tac-Toe
-Its a simple TIC-TAC-TOE GAME implemented in CPP.
+It's a simple TIC-TAC-TOE GAME implemented in CPP.
 
 ## Installation
 In case you don't have git<br/>
