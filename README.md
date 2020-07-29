@@ -2,7 +2,7 @@
 Its a simple TIC-TAC-TOE GAME implemented in CPP.
 
 ## Installation
-In case you don't have git
+In case you don't have git_
 `
 sudo apt-get install git
 `
