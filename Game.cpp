@@ -158,7 +158,7 @@ class TicTacToe
                         {
                             cout<<"You have tried 3 times in a wrong place\n\n";
                             cout<<"You have to again start the game\n";
-                            cout<<"Press ANY KEY for menu\n";
+                            cout<<"Press ENTER for menu\n";
                             return;
                         }
                     }
