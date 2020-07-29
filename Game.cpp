@@ -14,9 +14,9 @@ class TicTacToe
 {
     private :
         char board[side][side];
-        int moves[side*side];
         int moveIndex = 0,x,y;
         int place;
+        int count=0;
     public :
         void showBoard()
         {
@@ -56,9 +56,8 @@ class TicTacToe
 
         }
         
-        void initialise(char board[][side],int moves[])
+        void initialise(char board[][side])
         {
-            srand(time(NULL));
             
             for(int i = 0; i < side ; i++)
             {
@@ -67,13 +66,6 @@ class TicTacToe
                     board[i][j] = ' ';
                 }
             }
-            
-            for(int i = 0; i < side*side; i++)
-            {
-                moves[i]=i;
-            }
-            
-            random_shuffle(moves,moves+side*side);
             
             return;
         }
@@ -115,6 +107,7 @@ class TicTacToe
         
         void winner(int turn)
         {
+            system("clear");
             if(turn == PLAYER1)
             {
                 cout<<"Congratualtions Player 1 !!!\n You have won the match\n\n";
@@ -140,36 +133,79 @@ class TicTacToe
         void play(int turn)
         {
             
-            initialise(board,moves);
-            showBoard();
+            initialise(board);
             
             while(gameOver(board)==false && moveIndex != side*side)
             {
                 if(turn == PLAYER1)
                 {
+                    showBoard();
                     place = getData(turn);
                     system("clear");
                     x=(place-1)/side;
                     y=(place-1)%side;
-                    board[x][y] = PLAYER1MOVE;
-                    cout<<"Player 1 has put "<<PLAYER1MOVE<<" in a cell "<<place<<"\n";
-                    showBoard();
-                    moveIndex++;
-                    turn = PLAYER2;
+                    
+                    if(board[x][y]!=' ')
+                    {
+                        count++;
+                        if(count<3)
+                        {
+                            cout<<"This place is already marked\n";
+                            cout<<"Try Again\n";
+                            
+                        }
+                        else
+                        {
+                            cout<<"You have tried 3 times in a wrong place\n\n";
+                            cout<<"You have to again start the game\n";
+                            cout<<"Press ANY KEY for menu\n";
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        count=0;
+                        board[x][y] = PLAYER1MOVE;
+                        cout<<"Player 1 has put "<<PLAYER1MOVE<<" in a cell "<<place<<"\n";
+                        moveIndex++;
+                        turn = PLAYER2;
+                    }
                     
                 }
                 else if(turn == PLAYER2)
                 {
+                    showBoard();
                     place = getData(turn);
                     system("clear");
                     x=(place-1)/side;
                     y=(place-1)%side;
                     
-                    board[x][y] = PLAYER2MOVE;
-                    cout<<"Player 2 has put "<<PLAYER2MOVE<<" in a cell "<<place<<"\n";
-                    showBoard();
-                    moveIndex++;
-                    turn = PLAYER1;
+                    if(board[x][y]!=' ')
+                    {
+                        count++;
+                        if(count<3)
+                        {
+                            cout<<"This place is already marked\n";
+                            cout<<"Try Again\n";
+                            
+                        }
+                        else
+                        {
+                            cout<<"You have tried 3 times in a wrong place\n\n";
+                            cout<<"You have to again start the game\n";
+                            cout<<"Press ENTER for menu\n";
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        count=0;
+                        board[x][y] = PLAYER2MOVE;
+                        cout<<"Player 2 has put "<<PLAYER2MOVE<<" in a cell "<<place<<"\n";
+
+                        moveIndex++;
+                        turn = PLAYER1;
+                    }
                 }
             }
             
@@ -239,7 +275,11 @@ int main()
                 return 0;
                 break;
             default:
+                system("clear");
                 cout<<" \t---\tInvalid Choice\t---\t\n";
+                cout<<"\t---  Press ENTER for menu  ---\n";
+                getch();
+                getch();
                 break;
         }
     }while(choice!=3);
