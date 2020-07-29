@@ -1,7 +1,7 @@
 # Tic-Tac-Toe
 Its a simple TIC-TAC-TOE GAME implemented in CPP.
 
-##Installation
+## Installation
 In case you don't have git
 > sudo apt-get install git
 Clone the repo
