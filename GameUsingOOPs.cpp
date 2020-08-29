@@ -2,126 +2,123 @@
 #include<conio.h>
 using namespace std;
 
-
-
+#define side 3
 #define PLAYER1 1
 #define PLAYER2 2
 #define PLAYER1MOVE '0'
 #define PLAYER2MOVE 'X'
 
-class Board
+
+
+class TicTacToe
 {
-	private :
-	    int side;
-	public : 
-        char** gameBoard;
-		Board(int side)
-		{
-			this->side=side; // This pointer is used as data member and variable have same name.
-            gameBoard = new char*[side];
-            for(int i =0;i<side;i++)
-            {
-                gameBoard[i] = new char[side];
-            }
-
-            for(int i=0;i<side;i++)
-            {
-                for(int j=0;j<side;j++)
-                {
-                    gameBoard[i][j]=' ';
-                }
-            }
-		}
-		
-		void showBoard()
+    private :
+        char board[side][side];
+        int moveIndex = 0,x,y;
+        int place;
+        int count=0;
+    public :
+        void showBoard()
         {
+            
+            cout<<"\n\n";
+            cout<<"\t\t\t\t-------------\n";
+            cout<<"\t\t\t\t| "<<board[0][0]<<" | "<<board[0][1]<<" | "<<board[0][2]<<" |\n";
+            cout<<"\t\t\t\t-------------\n";
+            cout<<"\t\t\t\t| "<<board[1][0]<<" | "<<board[1][1]<<" | "<<board[1][2]<<" |\n";
+            cout<<"\t\t\t\t-------------\n";
+            cout<<"\t\t\t\t| "<<board[2][0]<<" | "<<board[2][1]<<" | "<<board[2][2]<<" |\n";
+            cout<<"\t\t\t\t-------------\n";
+            cout<<"\n";
+            
+            cout<<"--\t--\t--\t--\t--\t--\t--\t--\t--\t--\t--\n";
+            
+            return;
+            
+        }
+        void Instruction()
+        {   
+            system("clear");
+            cout<<"\n\n";
+            cout<<"\t\t\t\t Tic-Tac_Toe \n\n";
+            cout<<"\t\tChoose a cell no. from 1-9 as below and play\n\n";
+            
+            cout<<"\t\t\t\t-------------\n";
+            cout<<"\t\t\t\t| 1 | 2 | 3 |\n";
+            cout<<"\t\t\t\t-------------\n";
+            cout<<"\t\t\t\t| 4 | 5 | 6 |\n";
+            cout<<"\t\t\t\t-------------\n";
+            cout<<"\t\t\t\t| 7 | 8 | 9 |\n";
+            cout<<"\t\t\t\t-------------\n";
+            cout<<"\n";
+            
+            cout<<"--\t--\t--\t--\t--\t--\t--\t--\t--\t--\t--\n";
 
-            for(int i =0;i<=side*2;i++)
-            {  
-                cout<<"\t\t\t\t ";
-                for(int j=0;j<side;j++)
+        }
+        
+        void initialise(char board[][side])
+        {
+            
+            for(int i = 0; i < side ; i++)
+            {
+                for(int j = 0; j < side; j++)
                 {
-                    if(i%2==0)
-                    {
-                        for(int k =0;k<side;k++)cout<<"----";
-                        break;
-                    }
-                    else
-                    {   
-                        if(j==0)cout<<"| ";
-                        cout<<gameBoard[i/2][j]<<" | ";
-                    }
+                    board[i][j] = ' ';
                 }
-                cout<<"\n";
             }
-            /*
-            for(int i =0;i<side;i++)
-            {  
-                cout<<"\t\t\t\t ---------------- ";
-                cout<<"\t\t\t\t | ";
-            	for(int j=0;j<side;j++)
-            	{
-           			cout<<gameBoard[i][j]<<" | ";
-            	}
-            	cout<<"\n";
-            }
-
-            */	            
+            
             return;
         }
         
-
-};
-
-class Play : public Board
-{   
-    private : 
-        int side;
-        int moveIndex = 1,x,y;
-        int place;
-        int count=0,cnt=0;
-    public:
-        Play(int side) : Board(side) 
-        {
-            this->side = side;
-        }
-        int turn = PLAYER1;
-
-        bool rowCrossed()
+        bool rowCrossed(char board[][side])
         {
             for(int i = 0; i < side; i++)
             {
-                if(gameBoard[i][0]==gameBoard[i][1] && gameBoard[i][1]==gameBoard[i][2] && gameBoard[i][0] !=' ')
+                if(board[i][0]==board[i][1] && board[i][1]==board[i][2] && board[i][0] !=' ')
                 return true;
             }
             return false;
         }
         
-        bool columnCrossed()
+        bool columnCrossed(char board[][side])
         {
             for(int i = 0; i < side; i++)
             {
-                if(gameBoard[0][i]==gameBoard[1][i] && gameBoard[1][i]==gameBoard[2][i] && gameBoard[0][i] !=' ')
+                if(board[0][i]==board[1][i] && board[1][i]==board[2][i] && board[0][i] !=' ')
                 return true;
             }
             return false;
         }
         
-        bool diagonalCrossed()
+        bool diagonalCrossed(char board[][side])
         {
-            if(gameBoard[0][0]==gameBoard[1][1] && gameBoard[1][1]==gameBoard[2][2] && gameBoard[0][0] !=' ')
+            if(board[0][0]==board[1][1] && board[1][1]==board[2][2] && board[0][0] !=' ')
                 return true;
-            if(gameBoard[0][2]==gameBoard[1][1] && gameBoard[1][1]==gameBoard[2][0] && gameBoard[0][2] !=' ')
+            if(board[0][2]==board[1][1] && board[1][1]==board[2][0] && board[0][2] !=' ')
                 return true;
                 
             return false;
         }
         
-        bool gameOver()
+        bool gameOver(char board[][side])
         {
-            return (this->rowCrossed() || this->columnCrossed() || this->diagonalCrossed());
+            return (rowCrossed(board) || columnCrossed(board) || diagonalCrossed(board));
         }
-
+        
+        void winner(int turn)
+        {
+            system("clear");
+            if(turn == PLAYER1)
+            {
+                cout<<"Congratualtions Player 1 !!!\n You have won the match\n\n";
+            }
+            else
+            {
+                cout<<"Congratualtions Player 2 !!!\n You have won the match\n\n";
+            }
+            return;
+        }
+        
         int getData(int turn)
         {
             int val;
@@ -130,59 +127,25 @@ class Play : public Board
                 cout<<"\t\tPlayer 2 Turn\n";
             cout<<"Enter the place where you want to mark : ";
             cin>>val;
-
-            if(val>side*side)
-            {   
-                cnt++;
-                if(cnt<3)
-                {
-                    system("clear");
-                    cout<<"\t\t You Entered Invalid Place \n";
-                    cout<<"\t\t Enter Again...\n";
-                    return getData(turn);
-                }
-                else
-                {
-                    cout<<"You have tried Invalid place for three times \n\n";
-                    cout<<"You have to start the game again\n";
-                    cout<<"Press ANY KEY for menu\n";
-                    return -1;
-                }
-
-            }
-            cnt=0;
             return val;
-        }
-
-        void winner(int turn)
+        }      
+        
+        void play(int turn)
         {
-            system("clear");
-            showBoard();
-            if(turn == PLAYER1)
-            {
-                cout<<"\t\t\tCongratualtions Player 1 !!!\n\t\t\tYou have won the match\n\n";
-            }
-            else
-            {
-                cout<<"\t\t\tCongratualtions Player 2 !!!\n\t\t\tYou have won the match\n\n";
-            }
-            return;
-        }
-
-        void gameStart(int turn)
-        {
-            while(this->gameOver()==false && moveIndex != side*side)
+            
+            initialise(board);
+            
+            while(gameOver(board)==false && moveIndex != side*side)
             {
                 if(turn == PLAYER1)
                 {
                     showBoard();
-                    place = this->getData(turn);
-                    if(place == -1)return;
+                    place = getData(turn);
                     system("clear");
                     x=(place-1)/side;
                     y=(place-1)%side;
                     
-                    if(gameBoard[x][y]!=' ')
+                    if(board[x][y]!=' ')
                     {
                         count++;
                         if(count<3)
@@ -202,7 +165,7 @@ class Play : public Board
                     else
                     {
                         count=0;
-                        gameBoard[x][y] = PLAYER1MOVE;
+                        board[x][y] = PLAYER1MOVE;
                         cout<<"Player 1 has put "<<PLAYER1MOVE<<" in a cell "<<place<<"\n";
                         moveIndex++;
                         turn = PLAYER2;
@@ -212,24 +175,22 @@ class Play : public Board
                 else if(turn == PLAYER2)
                 {
                     showBoard();
-                    place = this->getData(turn);
+                    place = getData(turn);
                     system("clear");
                     x=(place-1)/side;
                     y=(place-1)%side;
                     
-                    if(gameBoard[x][y]!=' ')
+                    if(board[x][y]!=' ')
                     {
                         count++;
                         if(count<3)
                         {
-                            showBoard();
                             cout<<"This place is already marked\n";
                             cout<<"Try Again\n";
                             
                         }
                         else
                         {
-                            showBoard();
                             cout<<"You have tried 3 times in a wrong place\n\n";
                             cout<<"You have to again start the game\n";
                             cout<<"Press ENTER for menu\n";
@@ -239,7 +200,7 @@ class Play : public Board
                     else
                     {
                         count=0;
-                        gameBoard[x][y] = PLAYER2MOVE;
+                        board[x][y] = PLAYER2MOVE;
                         cout<<"Player 2 has put "<<PLAYER2MOVE<<" in a cell "<<place<<"\n";
 
                         moveIndex++;
@@ -248,7 +209,7 @@ class Play : public Board
                 }
             }
             
-            if(this->gameOver()==false && moveIndex == side*side)
+            if(gameOver(board)==false && moveIndex == side*side)
             {
                 system("clear");
                 showBoard();
@@ -263,123 +224,22 @@ class Play : public Board
                 winner(turn);
             }
 
-            cout<<"\n\n\t\t\tPress ENTER for menu\n";
-            getch();
-            getch();
-
             return ;
         }
-
-};
-
-class Game : public Play
-{   
-    private:
-        int side;
-    public :
-        Game(int side) : Play(side)
-        {
-            this->side=side;
-        }
-        void GameTime()
-        {
-            int choice;
-          
-            do 
-            {    
-                system("clear");
-                cout<<"\n\n";
-                cout<<"\t\t      //--------------\\\\ "<<"\n";
-                cout<<"\t\t     //----------------\\\\ "<<"\n";
-                cout<<"\t\t    //------------------\\\\ "<<"\n";
-                cout<<"\t\t   //--------------------\\\\ "<<"\n";
-                cout<<"\t\t  //----------------------\\\\ "<<"\n";
-                cout<<"\t\t //------------------------\\\\ "<<"\n";
-                cout<<"\t\t//--||-- TIC-TAC-TOE -- ||--\\\\ "<<"\n\n\n";
-                cout<<"\t\t  - - - - -  MENU - - - - -\n\n\n";
-                cout<<"\t\t  1.  INSTRUCTION\n\n";
-                cout<<"\t\t  2.  PLAY\n\n";
-                cout<<"\t\t  3.  BACK\n\n";
-                cout<<"\n\n\t\t Enter your choice : ";
-                cin>>choice;
-                switch(choice)
-                {
-                    case 1:
-                        {
-                            system("clear");
-                            this->instruction();
-                            getch();
-                            getch();
-                        }
-                        break;
-                    case 2:
-                        system("clear");   
-                        gameStart(PLAYER1);
-                        getch();
-                        getch();
-                        return;
-                        break;
-                    case 3:
-                        return;
-                        break;
-                    default:
-                        system("clear");
-                        cout<<" \t---\tInvalid Choice\t---\t\n";
-                        cout<<"\t---  Press ENTER for menu  ---\n";
-                        getch();
-                        getch();
-                        break;
-                }
-            }while(choice!=3);
-
-
-            
-        }
-
-        void instruction()
-        {
-            system("clear");
-            cout<<"\n\n";
-            cout<<"\t\t\t\t Tic-Tac_Toe \n\n";
-            cout<<"\t\tChoose a cell no. from 1-"<<side*side<<" as below and play\n\n";
-            int p=1;
-
-            for(int i =0;i<=side*2;i++)
-            {  
-                cout<<"\t\t\t\t ";
-                for(int j=0;j<side;j++)
-                {
-                    if(i%2==0)
-                    {
-                        for(int k =0;k<side;k++)cout<<"----";
-                        break;
-                    }
-                    else
-                    {   
-                        if(j==0)cout<<"| ";
-                        cout<<p<<" | ";
-                        p++;   
-                    }
-                }
-                cout<<"\n";
-            }
-
-            cout<<"\n\n\t\t\tPress ENTER to continue. . . \n";
-
-            return;
-            
-        }
-
+        
+        
 };
 
 int main()
 {
-    int gridSize;
-    while(1)
-    {
+    TicTacToe t;
+
+    int choice;
+  
+    do 
+    {    
         system("clear");
         cout<<"\n\n";
-        cout<<"\t\t\t\t\t\t\t Press 1 for EXIT"<<"\n\n\n";
         cout<<"\t\t      //--------------\\\\ "<<"\n";
         cout<<"\t\t     //----------------\\\\ "<<"\n";
         cout<<"\t\t    //------------------\\\\ "<<"\n";
@@ -387,32 +247,42 @@ int main()
         cout<<"\t\t  //----------------------\\\\ "<<"\n";
         cout<<"\t\t //------------------------\\\\ "<<"\n";
         cout<<"\t\t//--||-- TIC-TAC-TOE -- ||--\\\\ "<<"\n\n\n";
-        cout<<"   (Note : Grid Size should be Odd no. and greater than 2)\n\n";
-        cout<<"\n\nEnter the Grid Size : ";
-        cin>>gridSize;
-
-        if(gridSize==1 || gridSize%2==0)
+        cout<<"\t\t  - - - - -  MENU - - - - -\n\n\n";
+        cout<<"\t\t  1.  INSTRUCTION\n\n";
+        cout<<"\t\t  2.  PLAY\n\n";
+        cout<<"\t\t  3.  EXIT\n\n";
+        cin>>choice;
+        switch(choice)
         {
-            system("clear");
-            cout<<"\n\n";
-            cout<<"\t\t      //--------------\\\\ "<<"\n";
-            cout<<"\t\t     //----------------\\\\ "<<"\n";
-            cout<<"\t\t    //------------------\\\\ "<<"\n";
-            cout<<"\t\t   //--------------------\\\\ "<<"\n";
-            cout<<"\t\t  //----------------------\\\\ "<<"\n";
-            cout<<"\t\t //------------------------\\\\ "<<"\n";
-            cout<<"\t\t//--||-- TIC-TAC-TOE -- ||--\\\\ "<<"\n\n\n";
-            cout<<"\t\tThank you for your precious time.\n";
-            cout<<"--\t--\t--\t     BYE\t    --\t--\t--\t\n";
-            break;
+            case 1:
+                {
+                    system("clear");
+                    t.Instruction();
+                    getch();
+                    getch();
+                }
+                break;
+            case 2:
+                system("clear");
+                t.play(PLAYER1);
+                getch();
+                getch();
+                break;
+            case 3:
+                system("clear");
+                cout<<"\t\tThank you for your lovely time.\n";
+                cout<<"--\t--\t--\t     BYE\t    --\t--\t--\t\n";
+                return 0;
+                break;
+            default:
+                system("clear");
+                cout<<" \t---\tInvalid Choice\t---\t\n";
+                cout<<"\t---  Press ENTER for menu  ---\n";
+                getch();
+                getch();
+                break;
         }
-
-        Game* g1 = new Game(gridSize);
-        g1->GameTime();
-        delete g1;
-    }
-
-
+    }while(choice!=3);
+    
     return 0;
 }
-
