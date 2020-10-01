@@ -23,7 +23,7 @@ g++ Game.cpp
 `
 ./a.out
 `
-
+##
 `
-If you like it, Please give star.
+If you like it, Please give a star.
 `
